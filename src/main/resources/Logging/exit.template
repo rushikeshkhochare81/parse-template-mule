@@ -1,0 +1,8 @@
+{
+"timestamp": #[vars.vExitTime],
+"Event: "Main"
+"FlowName": #[vars.vFlowName],
+"correlationId": #[vars.vCorrelationId default correlationId],
+"Integration Name": #[vars.vApiName],
+"Completion Time": #[vars.vExitTime - vars.vEntryTime]
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="entry_Sub_Flow" doc:id="71158975-281b-431b-89d5-97705de9ae17" >
+		<ee:transform doc:name="Transform Message" doc:id="6259d15c-7b26-49f4-8290-2af4258e2ea2" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="vApiName" ><![CDATA["Parse Template"]]></ee:set-variable>
+				<ee:set-variable variableName="vCorrelationId" ><![CDATA[correlationId]]></ee:set-variable>
+				<ee:set-variable variableName="vEntryTime" ><![CDATA[%dw 2.0
+output application/java
+---
+now() >> 'IST']]></ee:set-variable>
+				<ee:set-variable variableName="vFlowName" ><![CDATA[flow.name]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<parse-template doc:name="Parse Template entry" doc:id="b84c12e2-ce7d-4aec-bd46-ebaf34dbe991" location="${secure::template.entry}" target="vLoggerPayload" targetValue="#[payload]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="09050018-1caa-4770-889e-e34e4ea19619" message="#[vars.vLoggerPayload]"/>
+	</sub-flow>
+	<sub-flow name="exit_Sub_Flow" doc:id="5a4f55bc-c524-465f-812b-c6157262d73c" >
+		<set-variable value='#[now() &gt;&gt; "IST"]' doc:name="Set vExitTime" doc:id="d5a8dfe7-8933-43de-9366-88e5c49def47" variableName="vExitTime"/>
+		<set-variable value="#[flow.name]" doc:name="Set flowName" doc:id="558fc323-eb49-4599-af6a-c87daf7f23b6" variableName="vFlowName"/>
+		<parse-template doc:name="Parse Template exit" doc:id="d1d57f1c-88eb-4e30-8335-3f08c950b12e" location="${secure::template.exit}" target="vLoggerPayload" targetValue="#[payload]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="f20f729e-1704-4c78-9257-c818cf77934c" message="#[vars.vLoggerPayload]" />
+	</sub-flow>
+</mule>

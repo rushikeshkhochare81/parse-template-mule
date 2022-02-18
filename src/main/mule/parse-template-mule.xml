@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="parse-template-muleFlow" doc:id="482e054d-b1c6-45b9-89b3-a13df4acee6e" >
+		<http:listener doc:name="Listener" doc:id="0b5726b4-2309-4ccc-84c3-3c665d861b81" config-ref="HTTP_Listener_config" path="/parse"/>
+		<logger level="INFO" doc:name="Logger" doc:id="041a23bc-1920-4c53-853d-26eea64212ae" message="START"/>
+		<flow-ref doc:name="Flow Reference to entry_Sub_Flow" doc:id="9678e6d7-e7ad-4a5e-92ef-f884f52d138b" name="entry_Sub_Flow"/>
+		<set-payload value="HELLO MULEYS" doc:name="Set Payload" doc:id="b15a5bbd-18a2-4a20-af37-e1332b8ee609" />
+		<flow-ref doc:name="Flow Reference to exit_Sub_Flow" doc:id="c7ac8d31-2855-4947-881c-f9f19e549932" name="exit_Sub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="ecd9b8f5-3c03-43e3-bd3b-db9977330ed8" message="END"/>
+	</flow>
+</mule>
